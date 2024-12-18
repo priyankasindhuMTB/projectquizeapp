@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        body {
+            border: 1px solid #000;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #157677, #addf99);
+            color:rgb(242, 240, 255);
+        }
+     
+
+        #outer {
+            width: 80%;
+            padding: 20px;
+            border: 2px solid #000000;
+            border-radius: 10px;
+            line-height: 40px;
+            font-size: large;
+
+        }
+
+        button {
+            width: 100%;
+            border-radius: 10px;
+            line-height: 40px;
+            font-size: 20px;
+        }
+        button:hover{
+           background-color:brown;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="outer">
+        <div id=" head">
+            <h2 id="key">which of the following is a client site language...</h2>
+        </div>
+        <div>
+            <input type="radio" class="item" value="a" name="box">
+            <label>Java..</label>
+            <hr>
+        </div>
+        <div>
+            <input type="radio" class="item" value="b" name="box">
+            <label>Python..</label>
+            <hr>
+        </div>
+        <div>
+            <input type="radio" class="item" value="c" name="box">
+            <label>JavaScript..</label>
+            <hr>
+        </div>
+        <div>
+            <input type="radio" class="item" value="d" name="box">
+            <label>c..</label>
+        </div>
+        <button id="btn">Submit</button>
+
+    </div>
+    <script>
+        const question = [
+            {
+                question: 'which of the following is a client site language?',
+                a: 'java',
+                b: 'Python',
+                c: 'c',
+                d: 'javascript',
+                correct: 'd',
+            },
+            {
+                question: 'what does HTML stand for ?',
+                a: 'hyper text markup language',
+                b: 'cascading style sheet',
+                c: 'jason object Notation',
+                d: 'Helicopters Terminals Motorboats Lamborginis',
+                correct: 'a',
+
+            },
+            {
+                question: 'What year was JavaScript launched?',
+                a: 1996,
+                b: 1995,
+                c: 1994,
+                d: 'none of the above',
+                correct: 'b',
+            },
+            {
+                question: 'What does CSS stands for?',
+                a: 'Hypertext Markup Language',
+                b: 'Cascading Style Sheet',
+                c: 'Jason Object Notation',
+                d: 'Helicopters Terminals Motorboats Lamborginis',
+                correct: 'b',
+            }
+        ]
+        let index = 0
+        let right = 0;
+       let totalLength = question.length
+
+        function loadQuiz() {
+            if(index===totalLength){
+                return endQuiz();
+            }
+
+            let data = question[index]
+            let heading = document.getElementById('key')
+            heading.innerText = `${index + 1}) ${data.question}`
+
+            let label = document.querySelectorAll('label')
+            //   console.log(label);
+            label[0].innerText = data.a
+            label[1].innerText = data.b
+            label[2].innerText = data.c
+            label[3].innerText = data.d
+        }
+
+
+        document.getElementById('btn').addEventListener('click', function (e) {
+           
+            let givenAnswer = getAnswer();
+            let data = question[index]
+            if (givenAnswer === data.correct) {
+                right++;
+            }
+            index++;
+            loadQuiz();
+            reset();
+        })
+
+        let reset = ()=>{
+            let radio = document.querySelectorAll('.item')
+            radio.forEach((element) => {
+                element.checked=false;
+            })
+        }
+
+        let getAnswer = () => {
+            let radio = document.querySelectorAll('.item')
+            let ans;
+            radio.forEach((element) => {
+                if (element.checked) {
+                    ans = element.value;
+                }
+            })
+            return ans;
+        }
+
+        let endQuiz=()=>{
+            let div=document.getElementById('outer')
+             div.innerHTML=`<h2>you have scored ${right} / ${totalLength}.</h2>`
+        }
+
+        loadQuiz();
+
+
+    </script>
+</body>
+
+</html>
